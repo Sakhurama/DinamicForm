@@ -9,6 +9,12 @@ export default function Form() {
   const [opcionLenguajes, setOpcionLenguajes] = useState("");
   const [opcionDura, setOpcionDura] = useState("");
 
+  const trabajosDuros = [
+    {id: "arena", trabajo: "Llevar arena"},
+    {id: "ladrillos", trabajo: "Cargar ladrillos"},
+    {id: "concreto", trabajo: "Batir concreto"},
+  ]
+
   const handleChangeSelect = (event:any) => {
     setOpcionSeleccionada(event.target.value);
     setOpcionLenguajes("");
@@ -144,18 +150,25 @@ export default function Form() {
               ¿Qué es lo MAS duro?
             </label>
             <ul className="text-black">
-              <li className="mb-2">
-                <input type="radio" name="duro" id="arena" onChange={handleChangeDuro}/>
-                <label htmlFor="arena" className="pl-2 cursor-pointer">Llevar arena</label>
-              </li>
-              <li className="mb-2">
-                <input type="radio" name="duro" id="ladrillos" onChange={handleChangeDuro} />
-                <label htmlFor="ladrillos" className="pl-2 cursor-pointer">Cargar ladrillos</label>
-              </li>
-              <li className="mb-2">
-                <input type="radio" name="duro" id="concreto" onChange={handleChangeDuro}/>
-                <label htmlFor="concreto" className="pl-2 cursor-pointer">Batir concreto</label>
-              </li>
+              {trabajosDuros.map((objeto) => (
+                <li
+                  key={objeto.id}
+                >
+                  <input 
+                    type="radio" 
+                    name="grupoDeTrabajos" 
+                    id={objeto.id} 
+                    value={objeto.trabajo} 
+                    onChange={handleChangeDuro}
+                  />
+                  <label 
+                    htmlFor={objeto.id} 
+                    className="pl-2"
+                  >
+                    {objeto.trabajo}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
         )}
@@ -167,8 +180,14 @@ export default function Form() {
         )}
 
         {opcionDura && (
-          <div className="text-black text-center mb-4">
-            <p>¡Eso es realmente duro!</p>
+          <div>
+            <label 
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="pqDuro">
+                ¿Por qué {opcionDura} es duro?
+              </label>
+            <textarea id="pqDuro" className="mb-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
           </div>
         )}
 
