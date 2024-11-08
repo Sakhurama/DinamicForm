@@ -8,6 +8,7 @@ export default function Form() {
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
   const [opcionLenguajes, setOpcionLenguajes] = useState("");
   const [opcionDura, setOpcionDura] = useState("");
+  const [opcionOtroPy, setOpcionOtroPy] = useState("");
 
   const trabajosDuros = [
     {id: "arena", trabajo: "Llevar arena", descripcion: "llevar arena"},
@@ -15,10 +16,24 @@ export default function Form() {
     {id: "concreto", trabajo: "Batir concreto", descripcion: "batir concreto"},
   ]
 
+  const frameworksJs = [
+    {id: "react", nombre: "React"},
+    {id: "astro", nombre: "Astro"},
+    {id: "vue", nombre: "Vue"}
+  ]
+
+  const utilidadesPy = [
+    {id:"datos", nombre:"Ciencia de datos"},
+    {id:"IA", nombre:"Inteligencia Artificial"},
+    {id:"back", nombre:"Backend Dev"},
+    {id:"otro", nombre:"Otro..."},
+  ]
+
   const handleChangeSelect = (event:any) => {
     setOpcionSeleccionada(event.target.value);
     setOpcionLenguajes("");
     setOpcionDura("");
+    setOpcionOtroPy("");
   }
 
   const handleChangeLenguajes = (event:any) => {
@@ -27,6 +42,12 @@ export default function Form() {
 
   const handleChangeDuro = (event:any) => {
     setOpcionDura(event.target.value);
+  }
+
+  const handleChangeOtroPy = (event:any) => {
+    if (event.target.value === "otro"){
+      setOpcionOtroPy(event.target.checked);
+    }
   }
 
   return (
@@ -173,9 +194,50 @@ export default function Form() {
           </div>
         )}
 
-        {opcionLenguajes  && (
-          <div className="text-black text-center mb-4">
-            <p>¡Que buen lenguaje!</p>
+        {opcionLenguajes === "js" ? (
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2">¿Cuál es tu Framework preferido?</label>
+            {frameworksJs.map((frameworks) => (
+              <div key={frameworks.id} className="text-black">
+                <input type="radio" name="frameworks" id={frameworks.id} />
+                <label
+                  className="pl-2"
+                  htmlFor={frameworks.id}
+                >
+                  {frameworks.nombre}
+                </label>
+              </div>
+            )
+            )}
+          </div>
+        ) : opcionLenguajes === "py" ? (
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2">¿En qué utilizas Phyton?</label>
+            {utilidadesPy.map((utilidades) => (
+              <div key={utilidades.id}>
+                <input type="checkbox" value={utilidades.id} id={utilidades.id} onChange={handleChangeOtroPy} />
+                <label htmlFor={utilidades.id} className="pl-2 text-gray-700">
+                  {utilidades.nombre}
+                </label>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {opcionOtroPy && (
+          <div className="my-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="apellido"
+            >
+              ¿Cuál otro?
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="otro"
+              type="text"
+              placeholder="Para que usas Phyton..."
+            />
           </div>
         )}
 
@@ -193,7 +255,7 @@ export default function Form() {
 
         <div className="flex items-center justify-between">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
             type="button"
           >
             Enviar
