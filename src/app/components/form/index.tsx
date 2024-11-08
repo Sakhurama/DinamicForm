@@ -10,9 +10,9 @@ export default function Form() {
   const [opcionDura, setOpcionDura] = useState("");
 
   const trabajosDuros = [
-    {id: "arena", trabajo: "Llevar arena"},
-    {id: "ladrillos", trabajo: "Cargar ladrillos"},
-    {id: "concreto", trabajo: "Batir concreto"},
+    {id: "arena", trabajo: "Llevar arena", descripcion: "llevar arena"},
+    {id: "ladrillos", trabajo: "Cargar ladrillos", descripcion: "cargar ladrillos"},
+    {id: "concreto", trabajo: "Batir concreto", descripcion: "batir concreto"},
   ]
 
   const handleChangeSelect = (event:any) => {
@@ -158,7 +158,7 @@ export default function Form() {
                     type="radio" 
                     name="grupoDeTrabajos" 
                     id={objeto.id} 
-                    value={objeto.trabajo} 
+                    value={objeto.descripcion} 
                     onChange={handleChangeDuro}
                   />
                   <label 
