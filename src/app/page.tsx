@@ -3,7 +3,7 @@ import Form from "./components/form";
 
 export default function Home() {
   return (
-    <main className="flex justify-center items-center h-screen">
+    <main className="flex justify-center items-center min-h-screen py-20">
       <Form />
     </main>
   );

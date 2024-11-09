@@ -16,6 +16,13 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Formulario Dinámico",
   description: "Los campos del formulario se muestran según las respuestas del usuario. ",
+  icons: [
+    {
+      rel: "icon",
+      url: "/favicon.ico",
+      type: "image/x-icon"
+    }
+  ]
 };
 
 export default function RootLayout({

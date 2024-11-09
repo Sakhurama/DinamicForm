@@ -1,6 +1,5 @@
 "use client"
 
-import BasicForm from "@/app/basicForm/page";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -51,8 +50,8 @@ export default function Form() {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">
+    <div className="min-w-96 max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
         Formulario Dinámico
       </h2>
       <form>
@@ -262,11 +261,11 @@ export default function Form() {
           </button>
         </div>
       </form>
-      <div>
+      {/* <div>
         <Link href={"basicForm"}>
           <p>Ir al formulario básico</p>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }

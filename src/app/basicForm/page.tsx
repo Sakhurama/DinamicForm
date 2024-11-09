@@ -58,9 +58,7 @@ const handleSelectChange = (event: any) => {
 
             {selectedOption === "snk" ? (
                 <div>Eren</div>
-            ) : (
-                <div>Funciona</div>
-            )}
+            ) : null}
         </form>
     </>
     )
