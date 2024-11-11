@@ -60,27 +60,13 @@ export default function Form() {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="nombre"
           >
-            Nombre
+            Nombre completo
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="nombre"
             type="text"
             placeholder="Ingresa tu nombre"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="apellido"
-          >
-            Apellido
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="apellido"
-            type="text"
-            placeholder="Ingresa tu apellido"
           />
         </div>
         <div className="mb-6">
@@ -195,7 +181,9 @@ export default function Form() {
 
         {opcionLenguajes === "js" ? (
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">¿Cuál es tu Framework preferido?</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              ¿Cuál es tu Framework preferido?
+            </label>
             {frameworksJs.map((frameworks) => (
               <div key={frameworks.id} className="text-black">
                 <input type="radio" name="frameworks" id={frameworks.id} />
@@ -211,7 +199,9 @@ export default function Form() {
           </div>
         ) : opcionLenguajes === "py" ? (
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">¿En qué utilizas Phyton?</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              ¿En qué utilizas Phyton?
+            </label>
             {utilidadesPy.map((utilidades) => (
               <div key={utilidades.id}>
                 <input type="checkbox" value={utilidades.id} id={utilidades.id} onChange={handleChangeOtroPy} />
