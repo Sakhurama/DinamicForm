@@ -4,10 +4,13 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Form() {
+  const [nombre, setNombre] = useState("");
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
   const [opcionLenguajes, setOpcionLenguajes] = useState("");
   const [opcionDura, setOpcionDura] = useState("");
   const [opcionOtroPy, setOpcionOtroPy] = useState("");
+  const [enviado, setEnviado] = useState(false);
+  const [errores, setErrores] = useState(false);
 
   const trabajosDuros = [
     {id: "arena", trabajo: "Llevar arena", descripcion: "llevar arena"},
@@ -28,25 +31,38 @@ export default function Form() {
     {id:"otro", nombre:"Otro..."},
   ]
 
-  const handleChangeSelect = (event:any) => {
-    setOpcionSeleccionada(event.target.value);
+  const handleChangeSelect = (e:any) => {
+    setOpcionSeleccionada(e.target.value);
     setOpcionLenguajes("");
     setOpcionDura("");
     setOpcionOtroPy("");
   }
 
-  const handleChangeLenguajes = (event:any) => {
-    setOpcionLenguajes(event.target.value);
+  const handleChangeLenguajes = (e:any) => {
+    setOpcionLenguajes(e.target.value);
   }
 
-  const handleChangeDuro = (event:any) => {
-    setOpcionDura(event.target.value);
+  const handleChangeDuro = (e:any) => {
+    setOpcionDura(e.target.value);
   }
 
-  const handleChangeOtroPy = (event:any) => {
-    if (event.target.value === "otro"){
-      setOpcionOtroPy(event.target.checked);
+  const handleChangeOtroPy = (e:any) => {
+    if (e.target.value === "otro"){
+      setOpcionOtroPy(e.target.checked);
     }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if(!nombre){
+      console.log("Los campos no están rellenados");
+      setErrores(true)
+    } else {
+      console.log("Form enviado CORRECTAMENTE");
+      setErrores(false)
+    }
+
   }
 
   return (
@@ -54,7 +70,7 @@ export default function Form() {
       <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
         Formulario Dinámico
       </h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -63,10 +79,11 @@ export default function Form() {
             Nombre completo
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border ${errores && "border-red-600"} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             id="nombre"
             type="text"
             placeholder="Ingresa tu nombre"
+            onChange={(e) => setNombre(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -87,7 +104,7 @@ export default function Form() {
               <option value="diseñador">Diseñador</option>
               <option value="constructor">Constructor</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <div className="pointer-es-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +135,7 @@ export default function Form() {
                 <option value="tsx">Typescript</option>
                 <option value="py">Phyton</option>
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <div className="pointer-es-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
                   className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -242,10 +259,13 @@ export default function Form() {
           </div>
         )}
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col items-center justify-between">
+          {errores && (
+              <p className="text-red-600">Debes completar todos los campos.</p>
+          )}
           <button
             className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            type="button"
+            type="submit"
           >
             Enviar
           </button>
