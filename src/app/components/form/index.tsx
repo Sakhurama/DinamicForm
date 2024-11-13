@@ -5,12 +5,15 @@ import { useState } from "react";
 
 export default function Form() {
   const [nombre, setNombre] = useState("");
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
+  const [cargo, setCargo] = useState("");
   const [opcionLenguajes, setOpcionLenguajes] = useState("");
   const [opcionDura, setOpcionDura] = useState("");
   const [opcionOtroPy, setOpcionOtroPy] = useState("");
   const [enviado, setEnviado] = useState(false);
-  const [errores, setErrores] = useState(false);
+  const [errores, setErrores] = useState({
+    nombre: false,
+    cargo: false
+  });
 
   const trabajosDuros = [
     {id: "arena", trabajo: "Llevar arena", descripcion: "llevar arena"},
@@ -31,11 +34,24 @@ export default function Form() {
     {id:"otro", nombre:"Otro..."},
   ]
 
-  const handleChangeSelect = (e:any) => {
-    setOpcionSeleccionada(e.target.value);
+  const handleChangeNombre = (e:any) => {
+    setNombre(e.target.value);
+    setErrores((prevErrores) => ({
+      ...prevErrores,
+      nombre: false,
+    }))
+  }
+
+  const handleChangeCargo = (e:any) => {
+    setCargo(e.target.value);
     setOpcionLenguajes("");
     setOpcionDura("");
     setOpcionOtroPy("");
+
+    setErrores((prevErrores) => ({
+      ...prevErrores,
+      cargo: false
+    }))
   }
 
   const handleChangeLenguajes = (e:any) => {
@@ -55,12 +71,24 @@ export default function Form() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if(!nombre){
-      console.log("Los campos no están rellenados");
-      setErrores(true)
-    } else {
+    /*
+    Si un campo esta lleno devuelve true.
+    pero al enviarselo al estado Errores debo pasarlo como un true.
+
+    Si el campo está lleno sería true, uso el cortocircuito(!) para volverlo false, 
+    es decir, si está lleno(true) no hay error(false) - si está vacío(false) hay un error(true).
+    */
+    const hayErrores = {
+      nombre: !nombre,
+      cargo: !cargo
+    }
+
+    setErrores(hayErrores)
+
+    if(!hayErrores.nombre && !hayErrores.cargo){
       console.log("Form enviado CORRECTAMENTE");
-      setErrores(false)
+    } else {
+      console.log("Faltan campos por llenar");
     }
 
   }
@@ -79,7 +107,7 @@ export default function Form() {
             Nombre completo
           </label>
           <input
-            className={`shadow appearance-none border ${errores && "border-red-600"} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+            className={`shadow appearance-none border ${errores.nombre && "border-red-600"} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             id="nombre"
             type="text"
             placeholder="Ingresa tu nombre"
@@ -95,8 +123,8 @@ export default function Form() {
           </label>
           <div className="relative">
             <select
-              onChange={handleChangeSelect}
-              className="block appearance-none text-gray-700 w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              onChange={handleChangeCargo}
+              className={`block appearance-none text-gray-700 w-full bg-white border ${errores.cargo ? "border-red-600" : "border-gray-400 hover:border-gray-500"} px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline`}
               id="anime-favorito"
             >
               <option value="">Selecciona...</option>
@@ -116,7 +144,7 @@ export default function Form() {
           </div>
         </div>
 
-        {opcionSeleccionada === "programador" && (
+        {cargo === "programador" && (
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -148,7 +176,7 @@ export default function Form() {
           </div>
         )}
 
-        {opcionSeleccionada === "diseñador" && (
+        {cargo === "diseñador" && (
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -165,7 +193,7 @@ export default function Form() {
           </div>
         )}
 
-        {opcionSeleccionada === "constructor" && (
+        {cargo === "constructor" && (
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -260,7 +288,7 @@ export default function Form() {
         )}
 
         <div className="flex flex-col items-center justify-between">
-          {errores && (
+          {(errores.nombre || errores.cargo) && (
               <p className="text-red-600">Debes completar todos los campos.</p>
           )}
           <button
